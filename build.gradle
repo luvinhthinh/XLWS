@@ -1,0 +1,51 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'war'
+
+repositories {
+	mavenCentral()
+}
+
+configurations{
+	compile {
+		transitive = true
+		exclude module: 'jms'
+		exclude module: 'jmxtools'
+		exclude module: 'jmxri'
+		exclude module: 'mail'
+	}	
+}
+
+sourceSets{
+	main{
+		resources{
+			srcDir 'src/main/resources'
+			srcDir 'excels'
+		}
+		
+		output.resourcesDir='build/classes'
+		output.classesDir='build/classes/main'
+	}
+	
+	test{
+		resources{
+			srcDir 'src/main/resources'
+			srcDir 'excels'
+		}
+		
+		output.resourcesDir='build/classes'
+		output.classesDir='build/classes/main'
+	}
+}
+
+war {
+	baseName = 'dakamo'
+	version = ''
+}
+
+dependencies {
+	compile	'org.apache.poi:poi:3.12',
+			'org.apache.poi:poi-ooxml:3.12'
+
+	testCompile 'junit:junit:4.12'
+}
